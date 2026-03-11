@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Wish</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Quicksand:wght@300;400&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            background: #f0f4f0; /* Soft sage background */
+            background-image: radial-gradient(#dcedc1 1px, transparent 1px);
+            background-size: 20px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        #card {
+            background: #fffdf9;
+            width: 85%;
+            max-width: 500px;
+            padding: 50px;
+            border-radius: 2px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05), inset 0 0 100px rgba(220,237,193,0.2);
+            text-align: center;
+            position: relative;
+            border: 1px solid #e0e0e0;
+            display: none; /* Hidden until start */
+        }
+
+        /* Decorative Leaf Elements */
+        #card::before {
+            content: '🌿';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #6b8e23;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        #typed-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #4a4a4a;
+            min-height: 150px;
+        }
+
+        #start-screen {
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .wax-seal {
+            width: 80px;
+            height: 80px;
+            background: #a64d4d;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+            margin: 0 auto;
+        }
+
+        .wax-seal:hover { transform: scale(1.1); }
+        
+        .instruction {
+            margin-top: 15px;
+            color: #889988;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="start-screen" onclick="startCard()">
+        <div class="wax-seal">❤</div>
+        <div class="instruction">CLICK TO OPEN</div>
+    </div>
+
+    <div id="card">
+        <h1>Happy Birthday</h1>
+        <div id="typed-text"></div>
+    </div>
+
+    <audio id="bg-music" loop>
+        <source src="YOUR_SONG_URL_HERE.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const message = "I just wanted to take a second to tell you how much I appreciate you. Even in the short time we’ve known each other, you’ve made such a huge impact on me. I love the vibe we have and how easy it is to talk to you about anything. You’re a very bright spot in my world, and I’m really happy you’re in it.";
+        
+        let i = 0;
+        const textElement = document.getElementById("typed-text");
+        const music = document.getElementById("bg-music");
+
+        function startCard() {
+            document.getElementById("start-screen").style.display = "none";
+            document.getElementById("card").style.display = "block";
+            
+            // Try to play music
+            music.play().catch(e => console.log("Music auto-play prevented"));
+            
+            type();
+        }
+
+        function type() {
+            if (i < message.length) {
+                textElement.innerHTML += message.charAt(i);
+                i++;
+                setTimeout(type, 60);
+            } else {
+                triggerNatureConfetti();
+            }
+        }
+
+        function triggerNatureConfetti() {
+            // Earthy/Petal colored confetti
+            var count = 200;
+            var defaults = { origin: { y: 0.7 } };
+
+            function fire(particleRatio, opts) {
+              confetti(Object.assign({}, defaults, opts, {
+                particleCount: Math.floor(count * particleRatio)
+              }));
+            }
+
+            fire(0.25, { spread: 26, startVelocity: 55, colors: ['#dcedc1', '#a8e6cf'] });
+            fire(0.2, { spread: 60, colors: ['#ffaaa5', '#ffd3b6'] });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+        }
+    </script>
+</body>
+</html>
